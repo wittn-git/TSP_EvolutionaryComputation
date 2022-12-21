@@ -12,9 +12,9 @@ def loop(cities, gui, population):
     population.draw(population.get_best())
 
 def __main__():
-    field_number = 25
-    city_number = 15
-    population_size = 150
+    field_number = 40
+    city_number = 30
+    population_size = 2000
     gui = Gui(field_number)
     cities = [City(random.randint(0, field_number-1), random.randint(0, field_number-1), gui) for i in range(city_number)]
     population = Population(population_size, city_number, cities)
