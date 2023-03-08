@@ -14,7 +14,6 @@ class Population:
     def evolve(self):
         for agent in self.agents:
             agent.set_fitness(self.get_fitness(agent))
-        print(sum(a.fitness for a in self.agents)/self.population_size, self.get_best().fitness)
         new_agents = [self.get_best()]
         while(len(new_agents) < self.population_size):
             parent1, parent2 = self.choose_parent(), self.choose_parent()
@@ -59,10 +58,6 @@ class Population:
 
     def get_best(self):
         return min(self.agents, key=attrgetter('fitness'))
-    
-    def draw(self, agent):
-        for i, e in enumerate(agent.gene[0:len(agent.gene)-1]):
-            City.draw_egde(self.cities[int(e)], self.cities[int(agent.gene[i+1])])
-    
+
     def get_fitness(self, agent):
         return sum([City.get_distance(self.cities[int(e)], self.cities[int(agent.gene[i+1])]) for i, e in enumerate(agent.gene[0:len(agent.gene)-1])])

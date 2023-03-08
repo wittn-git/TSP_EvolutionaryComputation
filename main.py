@@ -4,20 +4,26 @@ from population import Population
 import random
 from agent import Agent
 
-
-def loop(cities, gui, population):
-    for city1 in cities:
-        city1.draw_city()
-    population.evolve()
-    population.draw(population.get_best())
-
 def __main__():
-    field_number = 40
-    city_number = 30
+    field_number = 50
+    city_number = 70
     population_size = 2000
-    gui = Gui(field_number)
-    cities = [City(random.randint(0, field_number-1), random.randint(0, field_number-1), gui) for i in range(city_number)]
+    generations = 500
+    
+    points = set()
+    while len(points) < city_number:
+        points.add((random.randint(2, field_number-2), random.randint(2, field_number-2)))
+    cities = [City(x,y) for (x,y) in points]
+
+    gui = Gui(field_number, cities)
     population = Population(population_size, city_number, cities)
-    gui.start(loop, (cities, gui, population))
+    
+    print([city.x for city in cities])
+    print([city.y for city in cities])
+    for i in range(generations):
+        print(i)
+        if(i == 3 or i == 100): print(population.get_best().gene)
+        population.evolve()
+        gui.draw(population.get_best())
 
 __main__()
